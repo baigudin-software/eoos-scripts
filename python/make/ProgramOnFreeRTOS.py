@@ -90,6 +90,7 @@ class ProgramOnFreeRTOS(Program):
         args = ['cmake', \
                 '-GMinGW Makefiles', \
                 f'-DCMAKE_TOOLCHAIN_FILE=./../cmake/Toolchain.windows.cortex-m3.gcc.cmake', \
+                f'-DCMAKE_BUILD_TYPE={self._get_args().config}' \
         ]
         if self._get_args().build == 'ALL':
             Message.out(f'[BUILD] Generating CMake project for all targets...', Message.INF)
