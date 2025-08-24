@@ -3,6 +3,8 @@
 # @author    Sergey Baigudin, sergey@baigudin.software
 # @copyright 2024-2025, Sergey Baigudin, Baigudin Software
 
+import os.path
+
 from make.Program import Program
 from common.System import System
 from common.Message import Message
@@ -17,12 +19,18 @@ class ProgramOnFreeRTOS(Program):
 
 
     def _do_build(self):
-        if System.is_linux():
-            self.__do_build_on_linux()
-        elif System.is_win32():
-            self.__do_build_on_win32()
-        else:
-            raise Exception(f'Unknown host OS')
+        if self._get_args().build is not None:
+            if self._get_args().toolchain is None:
+                Message.out(f'[WARNING] Toolchain file is not passed', Message.ERR)
+            else:
+                if os.path.isfile(f'./../../cmake/{self._get_args().toolchain}') is not True:
+                    raise Exception(f'Toolchain file does not exist')
+            if System.is_linux():
+                self.__do_build_on_linux()
+            elif System.is_win32():
+                self.__do_build_on_win32()
+            else:
+                raise Exception(f'Unknown host OS')
 
 
     def _do_install(self):
@@ -57,9 +65,10 @@ class ProgramOnFreeRTOS(Program):
             return
 
         args = ['cmake', \
-                f'-DCMAKE_TOOLCHAIN_FILE=./../cmake/Toolchain.linux.cortex-m3.gcc.cmake', \
                 f'-DCMAKE_BUILD_TYPE={self._get_args().config}' \
         ]
+        if self._get_args().toolchain is not None:
+            args.append(f'-DCMAKE_TOOLCHAIN_FILE=./../cmake/{self._get_args().toolchain}')
         if self._get_args().build == 'ALL':
             Message.out(f'[BUILD] Generating CMake project for all targets...', Message.INF)
         elif self._get_args().build == 'EOOS':
@@ -89,9 +98,10 @@ class ProgramOnFreeRTOS(Program):
 
         args = ['cmake', \
                 '-GMinGW Makefiles', \
-                f'-DCMAKE_TOOLCHAIN_FILE=./../cmake/Toolchain.windows.cortex-m3.gcc.cmake', \
                 f'-DCMAKE_BUILD_TYPE={self._get_args().config}' \
         ]
+        if self._get_args().toolchain is not None:
+            args.append(f'-DCMAKE_TOOLCHAIN_FILE=./../cmake/{self._get_args().toolchain}')
         if self._get_args().build == 'ALL':
             Message.out(f'[BUILD] Generating CMake project for all targets...', Message.INF)
         elif self._get_args().build == 'EOOS':

@@ -79,7 +79,6 @@ class Make:
         )
         parser.add_argument('-b', '--build' \
             , choices=['EOOS', 'ALL'] \
-            , default='ALL' \
             , help='compile either EOOS library target, or all targets' \
         )
         parser.add_argument('-r', '--run' \
@@ -99,6 +98,9 @@ class Make:
             , choices=['Release', 'Debug', 'RelWithDebInfo', 'MinSizeRel'] \
             , default='Debug' \
             , help='set project configuration' \
+        )
+        parser.add_argument('--toolchain' \
+            , help='define CMake toolchain file name in `cmake` direcrory' \
         )
         parser.add_argument('-j', '--jobs' \
             , type=int \
@@ -137,6 +139,8 @@ class Make:
             Message.out(f'[INFO] Argument INSTALL: {self.__get_args().install}', Message.INF)
         if self.__get_args().config is not None:
             Message.out(f'[INFO] Argument CONFIG: {self.__get_args().config}', Message.INF)
+        if self.__get_args().toolchain is not None:
+            Message.out(f'[INFO] Argument TOOLCHAIN: {self.__get_args().toolchain}', Message.INF)
         if self.__get_args().jobs is not None:
             Message.out(f'[INFO] Argument JOBS: {self.__get_args().jobs}', Message.INF)
         if self.__get_args().verbose is True:
@@ -150,7 +154,7 @@ class Make:
 
 
     __PROGRAM_NAME = 'EOOS Safe Project Builder'
-    __PROGRAM_VERSION = '2.0.0'
+    __PROGRAM_VERSION = '2.1.0'
 
 
 def main():
