@@ -92,7 +92,7 @@ class Make:
         )
         parser.add_argument('--install' \
             , action='store_true' \
-            , help='install on OS' \
+            , help='install on host OS' \
         )
         parser.add_argument('--config' \
             , choices=['Release', 'Debug', 'RelWithDebInfo', 'MinSizeRel'] \
