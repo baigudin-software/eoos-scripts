@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# @file      ProgramOnFreeRTOS.py
+# @file      ProgramOnBaremetal.py
 # @author    Sergey Baigudin, sergey@baigudin.software
 # @copyright 2024-2025, Sergey Baigudin, Baigudin Software
 
@@ -9,9 +9,9 @@ from make.Program import Program
 from common.System import System
 from common.Message import Message
 
-class ProgramOnFreeRTOS(Program):
+class ProgramOnBaremetal(Program):
     """
-    Program on ProgramOnFreeRTOS.
+    Program on ProgramOnBaremetal.
     """
 
     def __init__(self, args):
@@ -35,17 +35,17 @@ class ProgramOnFreeRTOS(Program):
 
     def _do_install(self):
         if self._get_args().install is True:
-            raise Exception(f'EOOS FreeRTOS program cannot be installed as the feature is in development')
+            raise Exception(f'EOOS baremetal program cannot be installed as the feature is in development')
 
 
     def _do_run(self):
         if self._get_args().run is not None:
-            raise Exception(f'EOOS FreeRTOS program cannot be run as the feature is in development')
+            raise Exception(f'EOOS baremetal program cannot be run as the feature is in development')
 
 
     def _do_coverage(self):
         if self._get_args().coverage is True:
-            raise Exception(f'EOOS FreeRTOS program cannot be covered as the feature is in development')
+            raise Exception(f'EOOS baremetal program cannot be covered as the feature is in development')
 
 
     def _get_run_ut_executable_path_to(self):

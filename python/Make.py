@@ -11,7 +11,7 @@ from common.System import System
 from common.Message import Message
 from make.ProgramOnPosix import ProgramOnPosix
 from make.ProgramOnWin32 import ProgramOnWin32
-from make.ProgramOnFreeRTOS import ProgramOnFreeRTOS
+from make.ProgramOnBaremetal import ProgramOnBaremetal
 
 class Make:
     """
@@ -37,8 +37,8 @@ class Make:
                 program = ProgramOnPosix( self.__get_args() )
             elif self.__get_args().eoos == f'WIN32':
                 program = ProgramOnWin32( self.__get_args() )
-            elif self.__get_args().eoos == f'FreeRTOS':
-                program = ProgramOnFreeRTOS( self.__get_args() )
+            elif self.__get_args().eoos == f'Generic' or self.__get_args().eoos == f'FreeRTOS':
+                program = ProgramOnBaremetal( self.__get_args() )
             else:
                 raise Exception(f'EOOS project not supported')
             if program is not None:
@@ -69,7 +69,7 @@ class Make:
             , epilog='(c) 2023-2025, Sergey Baigudin, Baigudin Software' \
         )
         parser.add_argument('-e', '--eoos' \
-            , choices=['POSIX', 'WIN32', 'FreeRTOS'] \
+            , choices=['POSIX', 'WIN32', 'FreeRTOS', 'Generic'] \
             , help='select a target EOOS project' \
             , required=True \
         )
@@ -154,7 +154,7 @@ class Make:
 
 
     __PROGRAM_NAME = 'EOOS Safe Project Builder'
-    __PROGRAM_VERSION = '2.1.0'
+    __PROGRAM_VERSION = '2.2.0'
 
 
 def main():
