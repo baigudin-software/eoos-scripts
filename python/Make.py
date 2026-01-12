@@ -99,7 +99,7 @@ class Make:
             , default='Debug' \
             , help='set project configuration' \
         )
-        parser.add_argument('--toolchain' \
+        parser.add_argument('-t', '--toolchain' \
             , help='define CMake toolchain file name in `cmake` direcrory' \
         )
         parser.add_argument('-j', '--jobs' \
@@ -154,7 +154,7 @@ class Make:
 
 
     __PROGRAM_NAME = 'EOOS Safe Project Builder'
-    __PROGRAM_VERSION = '2.2.0'
+    __PROGRAM_VERSION = '2.3.0'
 
 
 def main():
