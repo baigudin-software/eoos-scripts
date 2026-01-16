@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # @file      Program.py
 # @author    Sergey Baigudin, sergey@baigudin.software
-# @copyright 2023-2025, Sergey Baigudin, Baigudin Software
+# @copyright 2023-2026, Sergey Baigudin, Baigudin Software
 
 import os
 import shutil
@@ -112,7 +112,9 @@ class Program(IProgram):
         if self._get_args().run is None:
             return
         Message.out(f'[BUILD] Running unit tests...', Message.INF)
-        args = [self._get_run_executable(), '--gtest_shuffle']
+        args = [self._get_run_executable()]
+        if self._get_args().noshuffle is not True:
+            args.append('--gtest_shuffle')
         if len(self._get_args().run) > 0:
             arg = '--gtest_filter='
             if self._get_args().run is not None:

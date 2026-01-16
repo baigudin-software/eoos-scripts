@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # @file      Make.py
 # @author    Sergey Baigudin, sergey@baigudin.software
-# @copyright 2023-2025, Sergey Baigudin, Baigudin Software
+# @copyright 2023-2026, Sergey Baigudin, Baigudin Software
 
 import sys
 import time
@@ -86,6 +86,10 @@ class Make:
             , nargs='*' \
             , help='filter unit tests' \
         )
+        parser.add_argument('--noshuffle' \
+            , action='store_true' \
+            , help='do not shuffle unit tests' \
+        )
         parser.add_argument('--coverage' \
             , action='store_true' \
             , help='run unit tests and create code coverage report' \
@@ -133,6 +137,8 @@ class Make:
             Message.out(f'[INFO] Argument RUN: PASSED', Message.INF)
             for i, d in enumerate(self.__get_args().run):
                 Message.out(f'[INFO] Argument RUN {i}: {d}', Message.INF)
+        if self.__get_args().noshuffle is True:
+            Message.out(f'[INFO] Argument NOSHUFFLE: {self.__get_args().noshuffle}', Message.INF)
         if self.__get_args().coverage is True:
             Message.out(f'[INFO] Argument COVERAGE: {self.__get_args().coverage}', Message.INF)
         if self.__get_args().install is True:
@@ -154,7 +160,7 @@ class Make:
 
 
     __PROGRAM_NAME = 'EOOS Safe Project Builder'
-    __PROGRAM_VERSION = '2.3.0'
+    __PROGRAM_VERSION = '2.4.0'
 
 
 def main():
